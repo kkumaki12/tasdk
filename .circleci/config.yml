@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: circleci/ruby:3.0.0-node
+        environment:
+          RAILS_ENV: test
+    steps:
+      - checkout
+      - run: bundle install
+      - run: 
+          name: Rubocop
+          command: bundle exec rubocop
