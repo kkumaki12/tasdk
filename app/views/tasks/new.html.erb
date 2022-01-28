@@ -1,6 +1,6 @@
 <h1>タスク新規作成</h1>
 
-<%= form_with do |f| %>
+<%= form_with(model: @task) do |f| %>
 <%= f.label :name, "タスク名" %>
 <%= f.text_field :name %>
 
@@ -9,8 +9,3 @@
 
 <%= f.submit "登録" %>
 <% end %>
-
-<h1>hh</h1>
-<div>
-  <p>1</p>
-</div>
