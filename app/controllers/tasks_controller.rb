@@ -6,10 +6,14 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      render plain: 'ok'
+      redirect_to @task
     else
       render plain: 'bad'
     end
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
   private
