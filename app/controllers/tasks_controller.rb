@@ -1,4 +1,8 @@
 class TasksController < ApplicationController
+  def index
+    @tasks = Task.all
+  end
+
   def new
     @task = Task.new
   end
@@ -8,7 +12,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task
     else
-      render plain: 'bad'
+      render plain: "bad"
     end
   end
 
