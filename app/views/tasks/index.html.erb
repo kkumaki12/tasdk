@@ -1,0 +1,10 @@
+<h1>タスク一覧</h1>
+
+<%= @tasks.each do |task| %>
+<div class="card">
+  <h2>タスク名</h2>
+  <%= task.name %>
+  <h2>内容</h2>
+  <%= task.content %>
+</div>
+<% end %>
