@@ -1,5 +1,12 @@
 <h1>タスク新規作成</h1>
 
+<% if @task.errors.any? %>
+<% @task.errors.full_messages.each do |error| %>
+<li><%= error %></li>
+<% end %>
+<% end %>
+
+<%= flash.now[:alert] %>
 <%= form_with(model: @task) do |f| %>
 <%= f.label :name, "タスク名" %>
 <%= f.text_field :name %>
