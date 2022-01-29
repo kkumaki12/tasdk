@@ -1,0 +1,18 @@
+<h1>タスク編集</h1>
+
+<% if @task.errors.any? %>
+<% @task.errors.full_messages.each do |error| %>
+<li><%= error %></li>
+<% end %>
+<% end %>
+
+<%= flash.now[:alert] %>
+<%= form_with(model: @task) do |f| %>
+<%= f.label :name, "タスク名" %>
+<%= f.text_field :name %>
+
+<%= f.label :content, "内容" %>
+<%= f.text_area :content, size: "30*5" %>
+
+<%= f.submit "更新" %>
+<% end %>

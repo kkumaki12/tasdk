@@ -23,6 +23,17 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def update
+    @task = Task.find(params[:id])
+    return unless @task.update(task_params)
+
+    redirect_to @task, notice: "タスクを更新しました"
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+  end
+
   def destroy
     @task = Task.find(params[:id])
     if @task.destroy
