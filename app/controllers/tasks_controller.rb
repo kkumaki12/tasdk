@@ -1,3 +1,4 @@
+# encoding: utf-8
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
@@ -10,9 +11,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
+      flash[:notice] = "タスクを作成しました"
       redirect_to @task
     else
-      render plain: "bad"
+      flash.now[:alert] = "タスクの作成に失敗しました"
+      render "tasks/new"
     end
   end
 
