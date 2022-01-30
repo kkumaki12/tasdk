@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let(:task) { FactoryBot.create(:task) }
+  let(:task) { create(:task) }
 
   it 'タスク一覧が表示されること' do
     visit root_path
@@ -23,16 +23,23 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content('タスクを削除しました')
   end
 
-  it 'タスクの更新ができること' do
-    visit "/tasks/#{task.id}"
-    click_link '更新ページへ'
-    expect(page).to have_content('タスク編集')
+  describe 'タスクの更新' do
+    before do
+      visit "/tasks/#{task.id}"
+      click_link '更新ページへ'
+    end
 
-    fill_in 'タスク名', with: 'hoge'
-    fill_in '内容', with: 'foo'
-    click_button '更新'
-    expect(page).to have_content('タスクを更新しました')
-    expect(task.reload.name).to eq 'hoge'
-    expect(task.reload.content).to eq 'foo'
+    it 'タスク編集ページに行けること' do
+      expect(page).to have_content('タスク編集')
+    end
+
+    it 'タスクの更新ができること' do
+      fill_in 'タスク名', with: 'hoge'
+      fill_in '内容', with: 'foo'
+      click_button '更新'
+      expect(page).to have_content('タスクを更新しました')
+      expect(task.reload.name).to eq 'hoge'
+      expect(task.reload.content).to eq 'foo'
+    end
   end
 end
