@@ -1,5 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'バリデーションテスト' do
+    let(:task) { FactoryBot.create(:task) }
+
+    it 'name, contentがあれば有効なこと' do
+      expect(task).to be_valid
+    end
+
+    it 'nameがなければ無効なこと' do
+      task.name = nil
+      task.valid?
+      expect(task.errors[:name]).to include("can't be blank")
+    end
+
+    it 'contentがなければ無効なこと' do
+      task.content = nil
+      task.valid?
+      expect(task.errors[:content]).to include("can't be blank")
+    end
+  end
 end
