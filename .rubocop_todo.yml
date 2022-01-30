@@ -51,3 +51,4 @@ Style/StringLiterals:
   Exclude:
     - 'app/controllers/tasks_controller.rb'
     - 'config/environments/production.rb'
+    - '*'
