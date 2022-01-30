@@ -1,14 +1,31 @@
 version: 2.1
+orbs: 
+  slack: circleci/slack@4.6.2
 jobs:
   build:
     working_directory: ~/app
     docker:
       - image: circleci/ruby:3.0.0-node
         environment:
-          RAILS_ENV: test
+          - RAILS_ENV: test
+          - MYSQL_DATABASE: 'ci_test'
+          - MYSQL_USER: 'root'
+          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          - MYSQL_PASSWORD: ''
+          - MYSQL_HOST: '%'
+          - MYSQL_PORT: 3306
+      - image: circleci/mysql:5.7.33
+          
+
     steps:
       - checkout
       - run: bundle install
+      - run: mv config/database.yml.ci config/database.yml
+      - run: rails db:create
       - run: 
           name: Rubocop
           command: bundle exec rubocop
+      - run:
+          name: Rspec
+          command: rspec
+
