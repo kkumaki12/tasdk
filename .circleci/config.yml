@@ -5,14 +5,14 @@ jobs:
   build:
     working_directory: ~/app
     docker:
-      - image: circleci/ruby:3.0.0-node
+      - image: circleci/ruby:3.0.0-node-browsers
         environment:
           - RAILS_ENV: test
           - MYSQL_DATABASE: 'ci_test'
           - MYSQL_USER: 'root'
           - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
           - MYSQL_PASSWORD: ''
-          - MYSQL_HOST: '%'
+          - MYSQL_HOST: 127.0.0.1
           - MYSQL_PORT: 3306
       - image: circleci/mysql:5.7.33
           
@@ -23,6 +23,9 @@ jobs:
       - run: mv config/database.yml.ci config/database.yml
       - run: cat config/database.yml
       - run: rails db:create
+      - run: rails db:migrate
+      - run: yarn install
+      - run: rails webpacker:compile
       - run: 
           name: Rubocop
           command: bundle exec rubocop
