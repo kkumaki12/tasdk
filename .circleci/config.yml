@@ -39,10 +39,10 @@ jobs:
     steps:
       - slack/notify:
           event: fail
-          template: not good
+          template: basic_fail_1
       - slack/notify:
           event: pass
-          template: ok
+          template: success_tagged_deploy_1
 workflows:
   version: 2
   send-notification:
