@@ -11,13 +11,13 @@ RSpec.describe Task, type: :model do
     it 'nameがなければ無効なこと' do
       task.name = nil
       task.valid?
-      expect(task.errors[:name]).to include("can't be blank")
+      expect(task.errors[:name]).to include('を入力してください')
     end
 
     it 'contentがなければ無効なこと' do
       task.content = nil
       task.valid?
-      expect(task.errors[:content]).to include("can't be blank")
+      expect(task.errors[:content]).to include('を入力してください')
     end
   end
 end

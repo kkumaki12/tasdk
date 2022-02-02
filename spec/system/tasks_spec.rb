@@ -42,4 +42,13 @@ RSpec.describe 'Tasks', type: :system do
       expect(task.reload.content).to eq 'foo'
     end
   end
+
+  describe 'バリデーションエラー' do
+    it 'nameがないとき新規作成ができないこと' do
+      visit '/tasks/new'
+      fill_in '内容', with: 'hoge'
+      click_button '登録'
+      expect(page).to have_content('を入力してください')
+    end
+  end
 end
