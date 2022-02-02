@@ -39,10 +39,10 @@ jobs:
     steps:
       - slack/notify:
           event: fail
-          template: 失敗しました
+          template: not good
       - slack/notify:
           event: pass
-          template: 成功しました
+          template: ok
 workflows:
   version: 2
   send-notification:
