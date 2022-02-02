@@ -59,7 +59,6 @@ workflows:
   send-notification:
     jobs:
       - build
-      - notify
-
-      
-        
+      - notify:
+          requires:
+            - build
