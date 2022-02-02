@@ -38,22 +38,11 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+          event: fail
+          template: 失敗しました
+      - slack/notify:
+          event: pass
+          template: 成功しました
 workflows:
   version: 2
   send-notification:
