@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let(:task) { create(:task) }
-  before do
-    Task.create(name: 'name1', content: 'content1', created_at: Time.zone.now)
-    Task.create(name: 'name2', content: 'content2', created_at: 1.day.from_now)
-    Task.create(name: 'name3', content: 'content3', created_at: 1.day.ago)
-  end
 
   it 'タスク一覧が表示されること' do
     visit root_path
