@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let(:task) { create(:task) }
+  before do
+    Task.create(name: 'name1', content: 'content1', created_at: Time.zone.now)
+    Task.create(name: 'name2', content: 'content2', created_at: 1.day.from_now)
+    Task.create(name: 'name3', content: 'content3', created_at: 1.day.ago)
+  end
 
   it 'タスク一覧が表示されること' do
     visit root_path
@@ -56,6 +61,16 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'タスク名', with: 'hoge'
       click_button '登録'
       expect(page).to have_content('内容を入力してください')
+    end
+  end
+
+  describe '並び順' do
+    it '作成されたタスクが作成日時の降順になっていること' do
+      visit '/tasks'
+      within '.tasks' do
+        task_names = all('.task-name').map(&:text)
+        expect(task_names).to eq %w(name2 name1 name3)
+      end
     end
   end
 end
