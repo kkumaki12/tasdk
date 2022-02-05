@@ -1,11 +1,17 @@
 <h1>タスク一覧</h1>
 
 <%= flash[:notice] %>
-<% @tasks.each do |task| %>
-<ul>
-  <h2>タスク名</h2>
-  <%= task.name %>
-  <h2>内容</h2>
-  <%= task.content %>
+<ul class="tasks">
+  <% @tasks.each do |task| %>
+  <li class="list-task">
+    <h2>タスク名</h2>
+    <div class="task-name">
+      <%= task.name %>
+    </div>
+    <h2>内容</h2>
+    <div class="task-content">
+      <%= task.content %>
+    </div>
+  </li>
+  <% end %>
 </ul>
-<% end %>

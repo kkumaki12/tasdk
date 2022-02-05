@@ -58,4 +58,20 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content('内容を入力してください')
     end
   end
+
+  describe '並び順' do
+    before do
+      Task.create(name: 'name1', content: 'content1', created_at: Time.zone.now)
+      Task.create(name: 'name2', content: 'content2', created_at: 1.day.from_now)
+      Task.create(name: 'name3', content: 'content3', created_at: 1.day.ago)
+    end
+
+    it '作成されたタスクが作成日時の降順になっていること' do
+      visit '/tasks'
+      within '.tasks' do
+        task_names = all('.task-name').map(&:text)
+        expect(task_names).to eq %w(name2 name1 name3)
+      end
+    end
+  end
 end
