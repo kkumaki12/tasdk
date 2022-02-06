@@ -7,7 +7,7 @@ class TasksController < ApplicationController
              when "終了期限の近い順"
                Task.all.near_deadline
              else
-               Task.all
+               Task.all.recent
              end
   end
 
