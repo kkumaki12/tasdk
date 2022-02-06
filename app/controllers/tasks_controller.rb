@@ -1,7 +1,14 @@
 # encoding: utf-8
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    @tasks = case params[:sort]
+             when "作成順"
+               Task.all.recent
+             when "終了期限の近い順"
+               Task.all.near_deadline
+             else
+               Task.all
+             end
   end
 
   def new
@@ -48,6 +55,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :content, :expiration_deadline)
+    params.require(:task).permit(:name, :content, :expiration_deadline, :sort)
   end
 end

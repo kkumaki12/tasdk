@@ -1,6 +1,11 @@
 <h1>タスク一覧</h1>
 
 <%= flash[:notice] %>
+<%= form_with model: @task, url: tasks_path, method: :get do |f| %>
+<%= f.select :sort, [['作成順', "作成順"], ['終了期限の近い順', "終了期限の近い順"]], selected: '作成順' %>
+<%= f.submit "ソート" %>
+<% end %>
+
 <ul class="tasks">
   <% @tasks.each do |task| %>
   <li class="list-task">
