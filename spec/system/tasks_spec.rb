@@ -12,6 +12,7 @@ RSpec.describe 'Tasks', type: :system do
     visit '/tasks/new'
     fill_in 'タスク名', with: 'hoge'
     fill_in '内容', with: 'foo'
+    fill_in '終了期限', with: Time.zone.now
     expect { click_button '登録' }.to change { Task.count }.by(1)
 
     expect(page).to have_content('タスクを作成しました')
@@ -47,6 +48,7 @@ RSpec.describe 'Tasks', type: :system do
     it 'nameがないとき新規作成ができないこと' do
       visit '/tasks/new'
       fill_in '内容', with: 'hoge'
+      find('input[id="task_expiration_deadline"]').set(1.day.from_now)
       click_button '登録'
       expect(page).to have_content('タスク名を入力してください')
     end
@@ -54,16 +56,25 @@ RSpec.describe 'Tasks', type: :system do
     it 'contentがないとき新規作成ができないこと' do
       visit '/tasks/new'
       fill_in 'タスク名', with: 'hoge'
+      find('input[id="task_expiration_deadline"]').set(1.day.from_now)
       click_button '登録'
       expect(page).to have_content('内容を入力してください')
+    end
+
+    it 'expiration_deadlineがないとき新規作成ができないこと' do
+      visit '/tasks/new'
+      fill_in 'タスク名', with: 'hoge'
+      fill_in '内容', with: 'hoge'
+      click_button '登録'
+      expect(page).to have_content('終了期限を入力してください')
     end
   end
 
   describe '並び順' do
     before do
-      Task.create(name: 'name1', content: 'content1', created_at: Time.zone.now)
-      Task.create(name: 'name2', content: 'content2', created_at: 1.day.from_now)
-      Task.create(name: 'name3', content: 'content3', created_at: 1.day.ago)
+      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now)
+      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now)
+      Task.create(name: 'name3', content: 'content3', expiration_deadline: 7.days.from_now, created_at: 1.day.ago)
     end
 
     it '作成されたタスクが作成日時の降順になっていること' do
@@ -71,6 +82,16 @@ RSpec.describe 'Tasks', type: :system do
       within '.tasks' do
         task_names = all('.task-name').map(&:text)
         expect(task_names).to eq %w(name2 name1 name3)
+      end
+    end
+
+    it 'タスクを終了時刻の近い順に並び替えできること' do
+      visit '/tasks'
+      select '終了期限の近い順', from: 'sort'
+      click_button 'ソート'
+      within '.tasks' do
+        task_names = all('.task-name').map(&:text)
+        expect(task_names).to eq %w(name3 name2 name1)
       end
     end
   end
