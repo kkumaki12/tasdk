@@ -12,6 +12,10 @@
     <div class="task-content">
       <%= task.content %>
     </div>
+    <h2>終了期限</h2>
+    <div class="task-expiration-deadline">
+      <%= task.expiration_deadline.to_s(:datetime) %>
+    </div>
   </li>
   <% end %>
 </ul>

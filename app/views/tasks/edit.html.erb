@@ -14,5 +14,8 @@
 <%= f.label :content, "内容" %>
 <%= f.text_area :content, size: "30*5" %>
 
+<%= f.label :expiration_deadline, "終了期限" %>
+<%= f.datetime_local_field :expiration_deadline %>
+
 <%= f.submit "更新" %>
 <% end %>
