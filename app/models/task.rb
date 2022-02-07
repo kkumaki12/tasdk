@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates :content, presence: true
   validates :expiration_deadline, presence: true
+  validates :status, presense: true
 
   enum status: {
     not_started_yet: 0,
