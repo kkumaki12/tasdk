@@ -1,6 +1,9 @@
 # encoding: utf-8
 class TasksController < ApplicationController
+  before_action :set_q, only: %i(index search)
+
   def index
+    @statuses = Task.statuses_i18n
     @tasks = case params[:sort]
              when "作成順"
                Task.all.recent
@@ -52,9 +55,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = @q.result(distinct: true)
+  end
+
   private
 
   def task_params
     params.require(:task).permit(:name, :content, :expiration_deadline, :sort, :status)
+  end
+
+  def set_q
+    @q = Task.ransack(params[:q])
   end
 end
