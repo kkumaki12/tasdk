@@ -1,4 +1,4 @@
-<h1>タスク一覧</h1>
+<h1>検索結果</h1>
 
 <%= flash[:notice] %>
 <%= form_with model: @task, url: tasks_path, method: :get do |f| %>
@@ -7,7 +7,6 @@
 <% end %>
 
 <%= search_form_for @q, url: search_tasks_path do |f| %>
-
 
 <%= f.label :name_cont %>
 <%= f.search_field :name_cont %>
