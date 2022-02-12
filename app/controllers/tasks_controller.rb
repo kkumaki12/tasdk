@@ -3,7 +3,6 @@ class TasksController < ApplicationController
   before_action :set_q, only: %i(index search)
 
   def index
-    @statuses = Task.statuses_i18n
     @tasks = case params[:sort]
              when "作成順"
                Task.all.recent
@@ -66,6 +65,7 @@ class TasksController < ApplicationController
   end
 
   def set_q
+    @statuses = Task.statuses_i18n
     @q = Task.ransack(params[:q])
   end
 end
