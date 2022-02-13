@@ -5,6 +5,8 @@
 <%= @task.name %>
 <h2>内容</h2>
 <%= @task.content %>
+<h2>ステータス</h2>
+<%= @task.status_i18n %>
 <h2>終了期限</h2>
 <%= @task.expiration_deadline.to_s(:datetime) %>
 

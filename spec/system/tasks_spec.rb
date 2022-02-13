@@ -8,14 +8,23 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content('タスク一覧')
   end
 
-  it 'タスクの作成ができること' do
-    visit '/tasks/new'
-    fill_in 'タスク名', with: 'hoge'
-    fill_in '内容', with: 'foo'
-    fill_in '終了期限', with: Time.zone.now
-    expect { click_button '登録' }.to change { Task.count }.by(1)
+  describe 'タスクの作成' do
+    before do
+      visit '/tasks/new'
+      fill_in 'タスク名', with: 'hoge'
+      fill_in '内容', with: 'foo'
+      fill_in '終了期限', with: Time.zone.now
+    end
 
-    expect(page).to have_content('タスクを作成しました')
+    it 'タスクの作成ができること' do
+      expect { click_button '登録' }.to change { Task.count }.by(1)
+      expect(page).to have_content('タスクを作成しました')
+    end
+
+    it 'タスクのステータスの初期値が未着手であること' do
+      click_button '登録'
+      expect(page).to have_content('未着手')
+    end
   end
 
   it 'タスクの削除ができること' do
@@ -92,6 +101,32 @@ RSpec.describe 'Tasks', type: :system do
       within '.tasks' do
         task_names = all('.task-name').map(&:text)
         expect(task_names).to eq %w(name3 name2 name1)
+      end
+    end
+  end
+
+  describe '検索' do
+    before do
+      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now, status: 'not_started_yet')
+      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now, status: 'under_start')
+      visit '/tasks'
+    end
+
+    it 'タスク名で検索ができること' do
+      fill_in 'タスク名 は以下を含む', with: '1'
+      click_button '検索'
+      within '.tasks' do
+        task_names = all('.task-name').map(&:text)
+        expect(task_names).to eq %w(name1)
+      end
+    end
+
+    it 'ステータスで検索ができること' do
+      check 'q_status_eq_any_1'
+      click_button '検索'
+      within '.tasks' do
+        task_names = all('.task-name').map(&:text)
+        expect(task_names).to eq %w(name2)
       end
     end
   end
