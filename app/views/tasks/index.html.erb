@@ -8,14 +8,29 @@
 
 <%= search_form_for @q, url: search_tasks_path do |f| %>
 
-
 <%= f.label :name_cont %>
 <%= f.search_field :name_cont %>
 
+<%= f.label :status_eq_any, "未着手" %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 0 %>
+<%= f.label :status_eq_any, "着手中" %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 1 %>
+<%= f.label :status_eq_any, "完了" %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 2 %>
+
+<%
+=begin 
+%>
 <% @statuses.each do |status| %>
+<%= debug status %>
+<%= f.label :status_eq_any, status[1] %>
 <%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, status[0] %>
-<%= f.label status[1] %>
+
+
 <% end %>
+<%
+=end 
+%>
 
 <%= f.submit %>
 <% end %>
@@ -25,11 +40,15 @@
   <li class="list-task">
     <h2>タスク名</h2>
     <div class="task-name">
-      <%= task.name %>
+      <%= link_to task.name, task_path(task.id) %>
     </div>
     <h2>内容</h2>
     <div class="task-content">
       <%= task.content %>
+    </div>
+    <h2>ステータス</h2>
+    <div class="task-status">
+      <%= task.status_i18n %>
     </div>
     <h2>終了期限</h2>
     <div class="task-expiration-deadline">
