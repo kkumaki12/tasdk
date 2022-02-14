@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+100.times do |n|
+  Task.create(name: "#{n}つ目のタスク", content: "#{n}番目です", expiration_deadline: 100.days.from_now, status: rand(0..2))
+end
