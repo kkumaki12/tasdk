@@ -5,11 +5,11 @@ class TasksController < ApplicationController
   def index
     @tasks = case params[:sort]
              when "作成順"
-               Task.all.recent
+               Task.all.recent.page(1)
              when "終了期限の近い順"
-               Task.all.near_deadline
+               Task.all.near_deadline.page(1)
              else
-               Task.all.recent
+               Task.all.recent.page(1)
              end
   end
 
@@ -55,7 +55,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = @q.result(distinct: true)
+    @tasks = @q.result(distinct: true).page(1)
   end
 
   private
