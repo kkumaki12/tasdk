@@ -2,21 +2,21 @@
 
 <%= flash[:notice] %>
 <%= form_with model: @task, url: tasks_path, method: :get do |f| %>
-<%= f.select :sort, [['作成順', "作成順"], ['終了期限の近い順', "終了期限の近い順"]], selected: '作成順' %>
-<%= f.submit "ソート" %>
+<%= f.select :sort, [['作成順', "作成順"], ['終了期限の近い順', "終了期限の近い順"]], { selected: '作成順' } , { class: "form-select" } %>
+<%= f.submit "ソート", class: "btn btn-primary" %>
 <% end %>
 
 <%= search_form_for @q, url: search_tasks_path do |f| %>
 
-<%= f.label :name_cont %>
-<%= f.search_field :name_cont %>
+<%= f.label :name_cont, class: "form-label" %>
+<%= f.search_field :name_cont, class: "form-control" %>
 
-<%= f.label :status_eq_any, "未着手" %>
-<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 0 %>
+<%= f.label :status_eq_any, "未着手", class: "form-label" %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false, class: "form-check-input" }, 0 %>
 <%= f.label :status_eq_any, "着手中" %>
-<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 1 %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false, class: "form-check-input" }, 1 %>
 <%= f.label :status_eq_any, "完了" %>
-<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false }, 2 %>
+<%= f.check_box :status_eq_any, { multiple: true, include_hidden: false, class: "form-check-input" }, 2 %>
 
 <%
 =begin 
@@ -32,27 +32,28 @@
 =end 
 %>
 
-<%= f.submit %>
+<%= f.submit "検索", class:"btn btn-primary" %>
 <% end %>
 
-<ul class="tasks">
+<ul class="tasks list-unstyled mt-4 m-auto">
   <% @tasks.each do |task| %>
-  <li class="list-task">
-    <h2>タスク名</h2>
-    <div class="task-name">
+  <li class="list-task card">
+    <div class="task-name card-header">
       <%= link_to task.name, task_path(task.id) %>
     </div>
-    <h2>内容</h2>
-    <div class="task-content">
-      <%= task.content %>
-    </div>
-    <h2>ステータス</h2>
-    <div class="task-status">
-      <%= task.status_i18n %>
-    </div>
-    <h2>終了期限</h2>
-    <div class="task-expiration-deadline">
-      <%= task.expiration_deadline.to_s(:datetime) %>
+    <div class="card-body">
+      <h5>内容</h5>
+      <div class="task-content">
+        <%= task.content %>
+      </div>
+      <h5>ステータス</h5>
+      <div class="task-status">
+        <%= task.status_i18n %>
+      </div>
+      <h5>終了期限</h5>
+      <div class="task-expiration-deadline">
+        <%= task.expiration_deadline.to_s(:datetime) %>
+      </div>
     </div>
   </li>
   <% end %>

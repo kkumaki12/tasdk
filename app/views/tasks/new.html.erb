@@ -8,14 +8,14 @@
 
 <%= flash.now[:alert] %>
 <%= form_with(model: @task) do |f| %>
-<%= f.label :name, "タスク名" %>
-<%= f.text_field :name %>
+<%= f.label :name, "タスク名", class: "form-label" %>
+<%= f.text_field :name, class: "form-control" %>
 
-<%= f.label :content, "内容" %>
-<%= f.text_area :content, size: "30*5" %>
+<%= f.label :content, "内容", class: "form-label" %>
+<%= f.text_area :content, size: "30*5", class: "form-control" %>
 
-<%= f.label :expiration_deadline, "終了期限" %>
-<%= f.datetime_local_field :expiration_deadline %>
+<%= f.label :expiration_deadline, "終了期限", class: "form-label" %>
+<%= f.datetime_local_field :expiration_deadline, class: "form-control" %>
 
-<%= f.submit "登録" %>
+<%= f.submit "登録", class: "btn btn-primary" %>
 <% end %>
