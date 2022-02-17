@@ -130,4 +130,15 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'ページネーション' do
+    before do
+      create_list(:task, 50)
+    end
+
+    it '一つのページに最大10個のタスクが表示されること' do
+      visit '/tasks'
+      expect(all('.list-task').count).to eq 10
+    end
+  end
 end

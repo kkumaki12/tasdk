@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    name { 'MyString' }
+    sequence(:name) { |n| "#{n}MyString" }
     content { 'MyText' }
     expiration_deadline { Time.zone.now }
 
