@@ -4,6 +4,8 @@ class Task < ApplicationRecord
   validates :expiration_deadline, presence: true
   validates :status, presence: true
 
+  belongs_to :user
+
   enum status: {
     not_started_yet: 0,
     under_start: 1,
