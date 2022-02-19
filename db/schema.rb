@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2022_02_17_141551) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "expiration_deadline", null: false
     t.integer "status", default: 0, null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["name"], name: "index_tasks_on_name"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.index ["user_id"], name: "fk_rails_4d2a9e4d7e"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
