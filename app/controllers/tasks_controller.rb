@@ -1,6 +1,7 @@
 # encoding: utf-8
 class TasksController < ApplicationController
   before_action :set_q, only: %i(index search)
+  before_action :set_user, only: %i(create)
 
   def index
     @tasks = case params[:sort]
@@ -18,7 +19,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @user.tasks.new(task_params)
     if @task.save
       flash[:notice] = "タスクを作成しました"
       redirect_to @task
@@ -67,5 +68,9 @@ class TasksController < ApplicationController
   def set_q
     @statuses = Task.statuses_i18n
     @q = Task.ransack(params[:q])
+  end
+
+  def set_user
+    @user = User.create(name: "test")
   end
 end

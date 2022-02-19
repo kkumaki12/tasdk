@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let(:task) { create(:task) }
+  let(:user) { create(:user) }
 
   it 'タスク一覧が表示されること' do
     visit root_path
@@ -81,9 +82,9 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '並び順' do
     before do
-      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now)
-      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now)
-      Task.create(name: 'name3', content: 'content3', expiration_deadline: 7.days.from_now, created_at: 1.day.ago)
+      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now, user_id: user.id)
+      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now, user_id: user.id)
+      Task.create(name: 'name3', content: 'content3', expiration_deadline: 7.days.from_now, created_at: 1.day.ago, user_id: user.id)
     end
 
     it '作成されたタスクが作成日時の降順になっていること' do
@@ -107,8 +108,8 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '検索' do
     before do
-      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now, status: 'not_started_yet')
-      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now, status: 'under_start')
+      Task.create(name: 'name1', content: 'content1', expiration_deadline: 9.days.from_now, created_at: Time.zone.now, status: 'not_started_yet', user_id: user.id)
+      Task.create(name: 'name2', content: 'content2', expiration_deadline: 8.days.from_now, created_at: 1.day.from_now, status: 'under_start', user_id: user.id)
       visit '/tasks'
     end
 

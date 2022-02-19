@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:name) { |n| "#{n}MyString" }
     content { 'MyText' }
     expiration_deadline { Time.zone.now }
+    association :user
 
     factory :task_status_not_started_yet do
       status { 'not_started_yet' }
