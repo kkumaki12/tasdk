@@ -12,3 +12,15 @@ AllCops:
   TargetRubyVersion: 3.0
   # comment unless use rails cops
   TargetRailsVersion: 6.1
+  Exclude: 
+    - "vendor/**/*"
+    - "db/schema*.rb"
+    - "node_modules/**/*"
+    - "db/migrate/**/*" 
+    - "app/channels/**/*"
+    - "config/**/*"
+    - "config.ru"
+    - "bin/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "log/**/*"
