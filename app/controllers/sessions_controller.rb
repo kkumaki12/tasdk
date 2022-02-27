@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to user
     else
-      flash[:alert] = "メールアドレスかパスワードが間違っています"
-      render "new"
+      flash[:alert] = 'メールアドレスかパスワードが間違っています'
+      render 'new'
     end
   end
 
