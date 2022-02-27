@@ -17,6 +17,11 @@
     <nav>
       <ul class="list-unstyled navbar-nav">
         <li class="navbar-item"><%= link_to "タスク作成", new_task_path, class:"nav-link" %></li>
+        <% if current_user %>
+        <li class="navbar-item"><%= link_to "ログアウト", logout_path, method: :delete, class:"nav-link" %></li>
+        <% else %>
+        <li class="navbar-item"><%= link_to "ログイン", login_path, class:"nav-link" %></li>
+        <% end %>
       </ul>
     </nav>
   </header>
